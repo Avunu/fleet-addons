@@ -1,0 +1,4 @@
+id,name,sequence
+category_car,Car,10
+category_mpv,SUV / Van,20
+category_truck,Truck,30

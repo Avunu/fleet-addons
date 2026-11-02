@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="fleet_vehicle_view_form_vin" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.vin.decode</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <!-- The decode button sits next to the VIN, not in the button box:
+                 it acts on what was just typed into the field beside it. -->
+            <field name="vin_sn" position="after">
+                <field name="vin_check_digit_ok" invisible="1" />
+                <div class="o_row" invisible="not vin_sn">
+                    <button
+                        name="action_decode_vin"
+                        type="object"
+                        string="Decode VIN"
+                        icon="fa-download"
+                        class="btn-link ps-0"
+                    />
+                    <span
+                        class="text-warning"
+                        invisible="vin_check_digit_ok or not vin_sn"
+                        title="The 9th character does not match the checksum of the other 16. Usually a typo, but some manufacturers do not follow the standard."
+                    >
+                        <i class="fa fa-exclamation-triangle me-1" />Check digit
+                    </span>
+                </div>
+                <field name="vin_decode_note" invisible="not vin_decode_note" />
+            </field>
+
+            <!-- Specs go on their own page rather than into the core Engine
+                 group, which is gated on vehicle_type == 'car' and would hide
+                 all of this on anything the shop classifies otherwise. -->
+            <xpath expr="//notebook" position="inside">
+                <page
+                    string="VIN Specifications"
+                    name="vin_specifications"
+                    invisible="not vin_decoded_on"
+                >
+                    <group>
+                        <group string="Engine">
+                            <field name="vin_engine_displacement_l" />
+                            <field name="vin_engine_cylinders" />
+                            <field name="vin_engine_configuration" />
+                            <field name="vin_engine_manufacturer" />
+                        </group>
+                        <group string="Drivetrain">
+                            <field name="vin_drive_type" />
+                            <field name="vin_transmission_style" />
+                            <field name="vin_transmission_speeds" />
+                        </group>
+                        <group string="Body">
+                            <field name="vin_body_class" />
+                            <field name="vin_series" />
+                            <field name="vin_trim" />
+                            <field name="vin_gvwr" />
+                        </group>
+                        <group string="Build">
+                            <field name="vin_manufacturer" />
+                            <field name="vin_plant_country" />
+                            <field name="vin_decoded_on" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Backfill: select vehicles in the list and decode them in one batched
+         call rather than opening each one. -->
+    <record id="action_decode_vin_multi" model="ir.actions.server">
+        <field name="name">Decode VIN</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle" />
+        <field name="binding_model_id" ref="fleet.model_fleet_vehicle" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_decode_vin()</field>
+    </record>
+</odoo>

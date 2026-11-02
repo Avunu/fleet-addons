@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="fleet_vehicle_model_view_form_catalog" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.form.catalog</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <label for="year_start" string="Sold From" />
+                <div class="o_row">
+                    <field name="year_start" />
+                    <span class="mx-2">to</span>
+                    <field name="year_end" />
+                </div>
+                <field
+                    name="year_set"
+                    placeholder="e.g. 1985-2001,2023-2027"
+                    help="Every year this model was sold in. Ranges separated by commas."
+                />
+                <field name="nhtsa_model_id" groups="base.group_no_one" />
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_model_view_tree_catalog" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.list.catalog</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_tree" />
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="year_start" optional="show" />
+                <field name="year_end" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_model_view_search_catalog" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.search.catalog</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_search" />
+        <field name="arch" type="xml">
+            <filter name="contains_vehicle" position="after">
+                <!-- The catalog reaches back to 1981, but most of a shop's work
+                     is on vehicles still on the road. -->
+                <filter
+                    string="Current Models"
+                    name="current_models"
+                    domain="[('year_end', '&gt;=', 2020)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_model_brand_view_form_catalog" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.brand.form.catalog</field>
+        <field name="model">fleet.vehicle.model.brand</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_brand_view_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="nhtsa_make_id" groups="base.group_no_one" />
+            </field>
+        </field>
+    </record>
+</odoo>

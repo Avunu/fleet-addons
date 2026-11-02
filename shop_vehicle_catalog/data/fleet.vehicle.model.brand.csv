@@ -1,0 +1,40 @@
+id,name,nhtsa_make_id
+make_am_general,AM General,606
+make_aston_martin,Aston Martin,440
+make_autocar,Autocar,1297
+make_daihatsu,Daihatsu,847
+make_daimler,Daimler,10285
+make_datsun,Datsun,5657
+make_delorean,DeLorean,13022
+make_eagle,Eagle,2408
+make_fisker,Fisker,11856
+make_freightliner,Freightliner,450
+make_genesis,Genesis,5083
+make_geo,Geo,1146
+make_gmc,GMC,472
+make_hino,Hino,514
+make_hummer,Hummer,951
+make_international,International,526
+make_karma,Karma,5122
+make_kenworth,Kenworth,532
+make_lucid,Lucid,10919
+make_mack,Mack,490
+make_mclaren,McLaren,2236
+make_mercury,Mercury,465
+make_mitsubishi_fuso,Mitsubishi Fuso,528
+make_navistar,Navistar,491
+make_peterbilt,Peterbilt,495
+make_plymouth,Plymouth,2409
+make_polestar,Polestar,10224
+make_ram,RAM,496
+make_rivian,Rivian,10887
+make_saturn,Saturn,1056
+make_shelby,Shelby,11832
+make_spyker,Spyker,3766
+make_sterling_truck,Sterling Truck,9271
+make_triumph,Triumph,565
+make_ud,UD,518
+make_vinfast,VinFast,11366
+make_volvo_truck,Volvo Truck,487
+make_western_star,Western Star,4512
+make_yugo,Yugo,5553
