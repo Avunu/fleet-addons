@@ -41,7 +41,8 @@ class FleetVehicle(models.Model):
             "warning": {
                 "title": _("Check the model year"),
                 "message": _(
-                    "%(model)s is not listed as sold in %(year)s (catalog says %(range)s).\n\n"
+                    "%(model)s is not listed as sold in %(year)s "
+                    "(catalog says %(range)s).\n\n"
                     "This is only a warning -- imports and re-titled vehicles do fall "
                     "outside the catalog. Confirm against the VIN before saving.",
                     model=self.model_id.display_name,

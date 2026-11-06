@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2026 Avunu LLC (avu.nu)
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
-<odoo>
+<odoo noupdate="1">
     <!-- noupdate so a site that points these at a proxy or raises the timeout
          keeps its values across module updates. -->
-    <data noupdate="1">
-        <record id="param_vin_base_url" model="ir.config_parameter">
-            <field name="key">shop_vehicle_vin.base_url</field>
-            <field name="value">https://vpic.nhtsa.dot.gov/api/vehicles</field>
-        </record>
-        <record id="param_vin_timeout" model="ir.config_parameter">
-            <field name="key">shop_vehicle_vin.timeout</field>
-            <field name="value">20</field>
-        </record>
-    </data>
+    <record id="param_vin_base_url" model="ir.config_parameter">
+        <field name="key">shop_vehicle_vin.base_url</field>
+        <field name="value">https://vpic.nhtsa.dot.gov/api/vehicles</field>
+    </record>
+    <record id="param_vin_timeout" model="ir.config_parameter">
+        <field name="key">shop_vehicle_vin.timeout</field>
+        <field name="value">20</field>
+    </record>
 </odoo>

@@ -47,7 +47,8 @@ class FleetVehicleModel(models.Model):
     )
     year_set = fields.Char(
         string="Model Years",
-        help='Every year this model was sold in, as compressed ranges, e.g. "1985-2001,2023-2027".',
+        help="Every year this model was sold in, as compressed ranges, "
+        'e.g. "1985-2001,2023-2027".',
     )
     nhtsa_model_id = fields.Integer(
         string="NHTSA Model ID",

@@ -9,7 +9,10 @@
         <field name="arch" type="xml">
             <!-- Year first, then Model: a US shop writes a vehicle up as
                  Year/Make/Model, and the year is what narrows the model list. -->
-            <xpath expr="//div[hasclass('oe_title')]/label[@for='model_id']" position="before">
+            <xpath
+                expr="//div[hasclass('oe_title')]/label[@for='model_id']"
+                position="before"
+            >
                 <label for="model_year" string="Model Year" />
                 <h2>
                     <field
@@ -24,7 +27,10 @@
                  Falls back to the full list when no year is entered yet, and
                  uses year_start/year_end rather than the exact year set
                  because only those two are indexed. -->
-            <xpath expr="//div[hasclass('oe_title')]//field[@name='model_id']" position="attributes">
+            <xpath
+                expr="//div[hasclass('oe_title')]//field[@name='model_id']"
+                position="attributes"
+            >
                 <attribute name="domain">
                     model_year_int and [('year_start', '&lt;=', model_year_int), ('year_end', '&gt;=', model_year_int)] or []
                 </attribute>

@@ -17,6 +17,8 @@ dependencies = [
     # >>> odoo-nix: install set (managed from modules.txt) >>>
     "odoo",
     "packaging",
+    "odoo-addon-shop_vehicle_catalog",
+    "odoo-addon-shop_vehicle_vin",
     # <<< odoo-nix: install set <<<
 ]
 
@@ -25,7 +27,6 @@ dependencies = [
 # relock leaves this block alone.
 dev = [
     "debugpy",
-    "ruff",
     # Odoo's --dev=reload watcher needs a filesystem watcher it does not declare.
     "watchdog",
     # Odoo's test runner imports freezegun, and browser tours need
@@ -45,6 +46,8 @@ constraint-dependencies = ["setuptools<81"]
 [tool.uv.sources]
 # >>> odoo-nix: module sources (managed) >>>
     odoo = { path = "../.odoo-nix/odoo" }
+    "odoo-addon-shop_vehicle_catalog" = { path = "../shop_vehicle_catalog", editable = true }
+    "odoo-addon-shop_vehicle_vin" = { path = "../shop_vehicle_vin", editable = true }
 # <<< odoo-nix: module sources <<<
 
 [build-system]
@@ -65,3 +68,10 @@ packages = []
 "rjsmin" = ["setuptools"]
 "vobject" = ["setuptools"]
 # <<< odoo-nix: sdist build deps (managed) <<<
+
+[tool.odoo-nix]
+schema = 1
+profile = "github:Avunu/odoo-standards-profile/v1"
+
+[tool.odoo-nix.icons]
+src-icon = "assets/icons/fleet-addons.png"
