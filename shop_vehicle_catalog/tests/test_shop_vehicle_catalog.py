@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests import Form, TransactionCase, tagged
+from odoo.tools import mute_logger
 
 from ..models.fleet_vehicle_model import parse_year_set
 
@@ -140,7 +141,9 @@ class TestShopVehicleCatalog(TransactionCase):
         integra = self.env.ref("shop_vehicle_catalog.model_acura_integra")
         form = Form(self.env["fleet.vehicle"])
         form.model_id = integra
-        form.model_year = "2010"
+        # Form logs the onchange's warning; this test provokes it on purpose.
+        with mute_logger("odoo.tests.form.onchange"):
+            form.model_year = "2010"
         # The onchange warns; saving must still succeed, because imports and
         # re-titled vehicles legitimately fall outside the catalog.
         vehicle = form.save()

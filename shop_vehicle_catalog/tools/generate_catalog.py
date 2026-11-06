@@ -21,6 +21,9 @@ have matched but didn't would silently create a duplicate -- hence the
 strictness check in verify_alias_map().
 """
 
+# A command-line script run by hand, not addon code: stdout is its interface.
+# pylint: disable=print-used
+
 from __future__ import annotations
 
 import csv
@@ -90,7 +93,8 @@ CORE_BY_NORM = {normalise(name): xmlid for name, xmlid in CORE_BRANDS.items()}
 _ALIAS_TARGETS = set(BRAND_ALIASES.values()) - set(CORE_BRANDS.values())
 if _ALIAS_TARGETS:
     raise SystemExit(
-        f"BRAND_ALIASES point at XML IDs core fleet does not define: {sorted(_ALIAS_TARGETS)}"
+        "BRAND_ALIASES point at XML IDs core fleet does not define: "
+        f"{sorted(_ALIAS_TARGETS)}"
     )
 
 

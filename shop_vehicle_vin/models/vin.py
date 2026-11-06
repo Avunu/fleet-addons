@@ -66,7 +66,10 @@ def check_digit_matches(vin):
     vin = normalise(vin)
     if not has_valid_shape(vin):
         return False
-    total = sum(_TRANSLITERATION[char] * weight for char, weight in zip(vin, _WEIGHTS))
+    total = sum(
+        _TRANSLITERATION[char] * weight
+        for char, weight in zip(vin, _WEIGHTS, strict=False)
+    )
     remainder = total % 11
     expected = "X" if remainder == 10 else str(remainder)
     return vin[_CHECK_DIGIT_POSITION] == expected
