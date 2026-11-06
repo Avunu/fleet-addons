@@ -44,6 +44,20 @@ Each module's `__manifest__.py` is the source of truth. Both modules build on Od
 
 `shop_vehicle_catalog` ships its catalogue as CSV data files. The generator in its `tools/` folder, which rebuilds them from a checkout of the `commercial-makes` branch of [Avunu/open-vehicle-db](https://github.com/Avunu/open-vehicle-db), a fork of [open-vehicle-db](https://github.com/plowman/open-vehicle-db), is only needed to refresh the data, not to run the module. See its README.
 
+## Development
+
+The repository carries its own development environment, built by [odoo-nix](https://github.com/Avunu/odoo-nix) in addons mode. OCB and the repositories these modules depend on are flake inputs pinned in `flake.lock`, and the Python environment is locked in `nix/`. You need Nix with flakes, and optionally direnv.
+
+```sh
+git clone https://github.com/Avunu/fleet-addons.git && cd fleet-addons
+direnv allow                  # or: nix develop --no-pure-eval
+devenv up                     # PostgreSQL, Odoo and Mailpit
+odoo db provision             # a database with every module here installed
+odoo test shop_vehicle_catalog
+```
+
+After `nix flake update`, or when a module gains a `depends` or a Python requirement, run `odoo project relock` and commit `flake.lock` and `nix/`. A new dependency on another repository also needs its input and an `externalSources` entry in `flake.nix`. See odoo-nix's [A repository of addons](https://github.com/Avunu/odoo-nix/blob/main/docs/scaffolding/addons-repository.md).
+
 ## Tests
 
 Odoo runs a module's tests when you install or update it with `--test-enable`. Select a module's tests with a `--test-tags` filter and use a throwaway database:
