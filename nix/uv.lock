@@ -1704,7 +1704,7 @@ provides-extras = ["ldap"]
 
 [[package]]
 name = "odoo-addon-shop-vehicle-catalog"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../shop_vehicle_catalog" }
 dependencies = [
     { name = "odoo" },
@@ -1715,7 +1715,7 @@ requires-dist = [{ name = "odoo", specifier = "==18.0.*" }]
 
 [[package]]
 name = "odoo-addon-shop-vehicle-vin"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../shop_vehicle_vin" }
 dependencies = [
     { name = "odoo" },
