@@ -21,10 +21,10 @@ vehicle is hand-typed, so spellings drift and repair history cannot be grouped b
   `model_year` Char, because a Char cannot be compared against Integer year bounds in a
   view domain.
 - **Trim levels.** A new `fleet.vehicle.trim` model (Camry LE, SE, XSE…) belongs to a
-  model and is managed from a **Trim Levels** tab on the Fleet model form. `fleet.vehicle`
-  gains `trim_id`, shown under the model in the vehicle form's title block and offered
-  only for the selected model. Changing the model clears a trim that no longer fits, and
-  a constraint rejects a trim from a different model.
+  model and is managed from a **Trim Levels** tab on the Fleet model form.
+  `fleet.vehicle` gains `trim_id`, shown under the model in the vehicle form's title
+  block and offered only for the selected model. Changing the model clears a trim that
+  no longer fits, and a constraint rejects a trim from a different model.
 - **Year/Make/Model form**: Model Year sits above Model, and picking a year narrows the
   model list. A mismatch warns but never blocks — grey-market imports and re-titled
   vehicles legitimately fall outside the catalog.
