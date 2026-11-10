@@ -24,7 +24,7 @@ class FleetVehicle(models.Model):
     )
     vin_engine_manufacturer = fields.Char("Engine Manufacturer", readonly=True)
     vin_gvwr = fields.Char("GVWR Class", readonly=True)
-    vin_manufacturer = fields.Char("Manufacturer", readonly=True)
+    vin_manufacturer = fields.Char("Built By", readonly=True)
     vin_plant_country = fields.Char("Built In", readonly=True)
     vin_series = fields.Char("Series", readonly=True)
     vin_transmission_speeds = fields.Integer("Transmission Speeds", readonly=True)

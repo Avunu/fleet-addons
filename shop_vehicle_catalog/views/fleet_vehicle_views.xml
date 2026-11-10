@@ -7,8 +7,8 @@
         <field name="model">fleet.vehicle</field>
         <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
         <field name="arch" type="xml">
-            <!-- Year first, then Model: a US shop writes a vehicle up as
-                 Year/Make/Model, and the year is what narrows the model list. -->
+            <!-- Year, Manufacturer, Model: a US shop writes a vehicle up as
+                 Year/Make/Model, and each one narrows the model list. -->
             <xpath
                 expr="//div[hasclass('oe_title')]/label[@for='model_id']"
                 position="before"
@@ -22,17 +22,27 @@
                     />
                     <field name="model_year_int" invisible="1" />
                 </h2>
+                <label for="brand_id" />
+                <h2>
+                    <field
+                        name="brand_id"
+                        placeholder="e.g. Toyota"
+                        class="w-100"
+                        options="{'no_create': True}"
+                    />
+                </h2>
             </xpath>
-            <!-- Filter the model list to what was actually sold that year.
-                 Falls back to the full list when no year is entered yet, and
-                 uses year_start/year_end rather than the exact year set
+            <!-- Filter the model list by the manufacturer and by what was
+                 actually sold that year. Each condition applies only once its
+                 field is filled in, so an empty form offers every model. The
+                 year uses year_start/year_end rather than the exact year set
                  because only those two are indexed. -->
             <xpath
                 expr="//div[hasclass('oe_title')]//field[@name='model_id']"
                 position="attributes"
             >
                 <attribute name="domain">
-                    model_year_int and [('year_start', '&lt;=', model_year_int), ('year_end', '&gt;=', model_year_int)] or []
+                    (brand_id and [('brand_id', '=', brand_id)] or []) + (model_year_int and [('year_start', '&lt;=', model_year_int), ('year_end', '&gt;=', model_year_int)] or [])
                 </attribute>
             </xpath>
         </field>

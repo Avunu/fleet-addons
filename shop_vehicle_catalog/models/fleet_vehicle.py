@@ -28,6 +28,35 @@ class FleetVehicle(models.Model):
         "can be chosen.",
     )
 
+    # Core declares brand_id as `related="model_id.brand_id", readonly=False`.
+    # That is a trap once Manufacturer is an editable field of its own on the
+    # vehicle form: a related field's inverse writes through, so changing the
+    # manufacturer on one vehicle would re-brand the shared fleet.vehicle.model
+    # record -- and with it every other vehicle of that model. Computing it
+    # instead keeps the same column and the same "follows the model" behaviour,
+    # but the value stays on the vehicle.
+    brand_id = fields.Many2one(
+        related=False,
+        compute="_compute_brand_id",
+        store=True,
+        readonly=False,
+        string="Manufacturer",
+    )
+
+    @api.depends("model_id", "model_id.brand_id")
+    def _compute_brand_id(self):
+        for vehicle in self:
+            # With no model yet, keep whatever manufacturer was picked: that
+            # pick is what narrows the model list.
+            vehicle.brand_id = vehicle.model_id.brand_id or vehicle.brand_id
+
+    @api.onchange("brand_id")
+    def _onchange_brand_id_clear_model(self):
+        """Drop a model that belongs to another manufacturer."""
+        for vehicle in self:
+            if vehicle.brand_id and vehicle.model_id.brand_id != vehicle.brand_id:
+                vehicle.model_id = False
+
     @api.depends("model_year")
     def _compute_model_year_int(self):
         for vehicle in self:

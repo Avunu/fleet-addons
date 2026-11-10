@@ -25,9 +25,13 @@ vehicle is hand-typed, so spellings drift and repair history cannot be grouped b
   `fleet.vehicle` gains `trim_id`, shown under the model in the vehicle form's title
   block and offered only for the selected model. Changing the model clears a trim that
   no longer fits, and a constraint rejects a trim from a different model.
-- **Year/Make/Model form**: Model Year sits above Model, and picking a year narrows the
-  model list. A mismatch warns but never blocks — grey-market imports and re-titled
-  vehicles legitimately fall outside the catalog.
+- **Year/Make/Model form**: the vehicle title block reads Model Year, Manufacturer,
+  Model. Picking a year and/or a manufacturer narrows the model list, and picking a
+  model fills in its manufacturer. `fleet.vehicle.brand_id` is a stored computed field
+  here rather than core's `related`, so editing a vehicle's manufacturer can never
+  re-brand the shared model record. A year that does not match the model warns but never
+  blocks — grey-market imports and re-titled vehicles legitimately fall outside the
+  catalog.
 
 ## Design notes
 
