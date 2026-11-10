@@ -14,11 +14,13 @@
         "fleet",
     ],
     "data": [
+        "security/ir.model.access.csv",
         # Order matters: models reference categories and brands by XML ID.
         "data/fleet.vehicle.model.category.csv",
         "data/fleet.vehicle.model.brand.csv",
         "data/fleet.vehicle.model.csv",
         "views/fleet_vehicle_model_views.xml",
         "views/fleet_vehicle_views.xml",
+        "views/fleet_vehicle_trim_views.xml",
     ],
 }

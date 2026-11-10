@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <!-- Trim levels are managed from the model they belong to. -->
+    <record id="fleet_vehicle_model_view_form_trim" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.form.trim</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form" />
+        <field name="arch" type="xml">
+            <page name="vendors" position="before">
+                <page string="Trim Levels" name="trim_levels">
+                    <field name="trim_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="name" placeholder="e.g. LE, Sport, Limited" />
+                        </list>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <!-- The trim sits in the title block under the model, the way a shop reads
+         a vehicle off: model, then trim. It stays read-only until a model is
+         picked, because a trim is meaningless without one. -->
+    <record id="fleet_vehicle_view_form_trim" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.trim</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[hasclass('oe_title')]/h1[field[@name='model_id']]"
+                position="after"
+            >
+                <label for="trim_id" />
+                <h2>
+                    <field
+                        name="trim_id"
+                        placeholder="e.g. Limited"
+                        class="w-100"
+                        readonly="not model_id"
+                        context="{'default_model_id': model_id}"
+                        options="{'no_quick_create': True}"
+                    />
+                </h2>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_tree_trim" model="ir.ui.view">
+        <field name="name">fleet.vehicle.list.trim</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree" />
+        <field name="arch" type="xml">
+            <field name="model_id" position="after">
+                <field name="trim_id" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_search_trim" model="ir.ui.view">
+        <field name="name">fleet.vehicle.search.trim</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_search" />
+        <field name="arch" type="xml">
+            <field name="model_id" position="after">
+                <field name="trim_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
