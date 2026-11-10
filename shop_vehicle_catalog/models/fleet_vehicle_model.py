@@ -50,6 +50,12 @@ class FleetVehicleModel(models.Model):
         help="Every year this model was sold in, as compressed ranges, "
         'e.g. "1985-2001,2023-2027".',
     )
+    trim_ids = fields.One2many(
+        "fleet.vehicle.trim",
+        "model_id",
+        string="Trim Levels",
+        help="The trim levels this model is sold in, e.g. LE, SE and XSE.",
+    )
     nhtsa_model_id = fields.Integer(
         string="NHTSA Model ID",
         index=True,

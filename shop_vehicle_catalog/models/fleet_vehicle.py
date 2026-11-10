@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class FleetVehicle(models.Model):
@@ -16,6 +17,17 @@ class FleetVehicle(models.Model):
         help="Numeric form of Model Year, used to filter the model list.",
     )
 
+    trim_id = fields.Many2one(
+        "fleet.vehicle.trim",
+        string="Trim Level",
+        tracking=True,
+        index="btree_not_null",
+        ondelete="restrict",
+        domain="[('model_id', '=', model_id)]",
+        help="Trim level of the vehicle. Only the trims of the selected model "
+        "can be chosen.",
+    )
+
     @api.depends("model_year")
     def _compute_model_year_int(self):
         for vehicle in self:
@@ -23,6 +35,27 @@ class FleetVehicle(models.Model):
                 vehicle.model_year_int = int((vehicle.model_year or "").strip())
             except ValueError:
                 vehicle.model_year_int = 0
+
+    @api.constrains("trim_id", "model_id")
+    def _check_trim_belongs_to_model(self):
+        for vehicle in self.filtered("trim_id"):
+            if vehicle.trim_id.model_id != vehicle.model_id:
+                raise ValidationError(
+                    _(
+                        "The trim level %(trim)s belongs to %(trim_model)s, "
+                        "not to %(model)s.",
+                        trim=vehicle.trim_id.name,
+                        trim_model=vehicle.trim_id.model_id.display_name,
+                        model=vehicle.model_id.display_name,
+                    )
+                )
+
+    @api.onchange("model_id")
+    def _onchange_model_id_clear_trim(self):
+        """A trim of the previous model means nothing on the new one."""
+        for vehicle in self:
+            if vehicle.trim_id and vehicle.trim_id.model_id != vehicle.model_id:
+                vehicle.trim_id = False
 
     @api.onchange("model_id", "model_year")
     def _onchange_catalog_year_match(self):
