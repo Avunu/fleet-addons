@@ -2,24 +2,37 @@
 <!-- Copyright 2026 Avunu LLC (avu.nu)
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
 <odoo>
+    <!-- year_start/year_end are Integers, and the web client groups integers
+         with the user's thousands separator, so 2015 would render as "2,015".
+         A year is not a quantity: enable_formatting=false shows the bare digits.
+         The NHTSA ids are identifiers, not quantities, for the same reason.
+         Core's Model Year on the vehicle is a Char and never had the problem. -->
     <record id="fleet_vehicle_model_view_form_catalog" model="ir.ui.view">
         <field name="name">fleet.vehicle.model.form.catalog</field>
         <field name="model">fleet.vehicle.model</field>
         <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form" />
         <field name="arch" type="xml">
+            <!-- Core's own Model Year on the model is an Integer too. -->
+            <field name="model_year" position="attributes">
+                <attribute name="options">{'enable_formatting': false}</attribute>
+            </field>
             <field name="category_id" position="after">
                 <label for="year_start" string="Sold From" />
                 <div class="o_row">
-                    <field name="year_start" />
+                    <field name="year_start" options="{'enable_formatting': false}" />
                     <span class="mx-2">to</span>
-                    <field name="year_end" />
+                    <field name="year_end" options="{'enable_formatting': false}" />
                 </div>
                 <field
                     name="year_set"
                     placeholder="e.g. 1985-2001,2023-2027"
                     help="Every year this model was sold in. Ranges separated by commas."
                 />
-                <field name="nhtsa_model_id" groups="base.group_no_one" />
+                <field
+                    name="nhtsa_model_id"
+                    groups="base.group_no_one"
+                    options="{'enable_formatting': false}"
+                />
             </field>
         </field>
     </record>
@@ -30,8 +43,16 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_tree" />
         <field name="arch" type="xml">
             <field name="category_id" position="after">
-                <field name="year_start" optional="show" />
-                <field name="year_end" optional="show" />
+                <field
+                    name="year_start"
+                    optional="show"
+                    options="{'enable_formatting': false}"
+                />
+                <field
+                    name="year_end"
+                    optional="show"
+                    options="{'enable_formatting': false}"
+                />
             </field>
         </field>
     </record>
@@ -59,7 +80,11 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_model_brand_view_form" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="nhtsa_make_id" groups="base.group_no_one" />
+                <field
+                    name="nhtsa_make_id"
+                    groups="base.group_no_one"
+                    options="{'enable_formatting': false}"
+                />
             </field>
         </field>
     </record>
