@@ -4,7 +4,7 @@
     "name": "Shop Vehicle VIN Decode",
     "summary": "Decode a VIN against the NHTSA vPIC API to fill in the vehicle's "
     "model, year, engine and drivetrain.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Human Resources/Fleet",
     "author": "Avunu LLC",
     "website": "https://github.com/Avunu/fleet-addons",
