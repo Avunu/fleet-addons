@@ -22,5 +22,6 @@
         "views/fleet_vehicle_model_views.xml",
         "views/fleet_vehicle_views.xml",
         "views/fleet_vehicle_trim_views.xml",
+        "wizards/fleet_vehicle_model_merge_views.xml",
     ],
 }
