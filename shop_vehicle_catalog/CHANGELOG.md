@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Avunu/fleet-addons/compare/shop_vehicle_catalog-18.0.1.1.0...shop_vehicle_catalog-18.0.1.2.0) (2026-11-23)
+
+
+### Features
+
+* **shop_vehicle_catalog:** offer models without years and merge duplicate models ([#20](https://github.com/Avunu/fleet-addons/issues/20)) ([2476790](https://github.com/Avunu/fleet-addons/commit/247679071f292edaef7423cdc77ae0205e9f08c5))
+
 ## [1.1.0](https://github.com/Avunu/fleet-addons/compare/shop_vehicle_catalog-18.0.1.0.0...shop_vehicle_catalog-18.0.1.1.0) (2026-11-21)
 
 
