@@ -130,7 +130,14 @@ class TestVehicleFormLayout(TransactionCase):
     def test_model_domain_filters_by_year(self):
         self.assertEqual(
             self._model_domain(brand_id=False, model_year_int=2015),
-            [("year_start", "<=", 2015), ("year_end", ">=", 2015)],
+            [
+                "|",
+                ("year_start", "in", [0, False]),
+                ("year_start", "<=", 2015),
+                "|",
+                ("year_end", "in", [0, False]),
+                ("year_end", ">=", 2015),
+            ],
         )
 
     def test_model_domain_filters_by_both(self):
@@ -138,7 +145,11 @@ class TestVehicleFormLayout(TransactionCase):
             self._model_domain(brand_id=7, model_year_int=2015),
             [
                 ("brand_id", "=", 7),
+                "|",
+                ("year_start", "in", [0, False]),
                 ("year_start", "<=", 2015),
+                "|",
+                ("year_end", "in", [0, False]),
                 ("year_end", ">=", 2015),
             ],
         )
@@ -151,3 +162,24 @@ class TestVehicleFormLayout(TransactionCase):
         self.assertTrue(found)
         self.assertEqual(found.brand_id, toyota)
         self.assertIn(self.env.ref("shop_vehicle_catalog.model_toyota_camry"), found)
+
+    def test_model_domain_offers_models_without_years(self):
+        """A model typed in by hand, with no years, is offered for any year;
+        one with a single bound is open-ended on the other side."""
+        toyota = self.env.ref("fleet.brand_toyota")
+        Model = self.env["fleet.vehicle.model"]
+        handmade = Model.create({"name": "Handmade Hauler", "brand_id": toyota.id})
+        started = Model.create(
+            {"name": "Started Only", "brand_id": toyota.id, "year_start": 2010}
+        )
+
+        def offered(year):
+            domain = self._model_domain(brand_id=toyota.id, model_year_int=year)
+            return Model.search(domain)
+
+        self.assertIn(handmade, offered(1995))
+        self.assertIn(handmade, offered(2025))
+        self.assertIn(started, offered(2025))
+        self.assertNotIn(started, offered(2005))
+        camry = self.env.ref("shop_vehicle_catalog.model_toyota_camry")
+        self.assertNotIn(camry, offered(camry.year_start - 1))

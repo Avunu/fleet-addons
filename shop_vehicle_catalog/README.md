@@ -33,6 +33,17 @@ vehicle is hand-typed, so spellings drift and repair history cannot be grouped b
   blocks — grey-market imports and re-titled vehicles legitimately fall outside the
   catalog.
 
+- **Hand-made models are always offered.** A model missing First Year or Last Year is
+  open-ended on that side of the year filter, so one created by hand with no years shows
+  for every model year.
+- **Merge Models.** Select duplicate models in the Fleet model list, then Action → Merge
+  Models (Fleet managers) and choose the one to keep; it defaults to the catalog's
+  record, else the most used. Vehicles and every other record pointing at the others
+  move to it, trims of the same name are folded together, its missing years, category
+  and vendors are filled from the others, and their chatter moves across. The others are
+  then deleted, or archived if they are catalog records (a deleted one would come back
+  on the next module update).
+
 ## Design notes
 
 **`vehicle_type` is deliberately left at `'car'` on every catalog record.** It is
